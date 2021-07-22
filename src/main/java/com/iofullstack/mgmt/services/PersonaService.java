@@ -1,32 +1,79 @@
 package com.iofullstack.mgmt.services;
 
 import com.iofullstack.mgmt.entities.Persona;
+import com.iofullstack.mgmt.repositories.PersonaRepository;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class PersonaService implements BaseService<Persona>{
+    private PersonaRepository personaRepository;
+    
+    public PersonaService(PersonaRepository personaRepository) {
+        this.personaRepository = personaRepository;
+    }
+
     @Override
+    @Transactional
     public List<Persona> findAll() throws Exception {
-        return null;
+        try {
+            List<Persona> entities = personaRepository.findAll();
+            return entities;
+        } catch(Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
     @Override
+    @Transactional
     public Persona findById(Long id) throws Exception {
-        return null;
+        try {
+            Optional<Persona> entityOptional = personaRepository.findById(id);
+            return entityOptional.get();
+        } catch(Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
     @Override
+    @Transactional
     public Persona save(Persona entity) throws Exception {
-        return null;
+        try {
+            entity = personaRepository.save(entity);
+            return entity;
+        } catch(Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
     @Override
+    @Transactional
     public Persona update(Long id, Persona entity) throws Exception {
-        return null;
+        try {
+            Optional<Persona> entityOptional = personaRepository.findById(id);
+            Persona persona = entityOptional.get();
+            persona = personaRepository.save(persona);
+            return persona;
+        } catch(Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
     @Override
+    @Transactional
     public boolean delete(Long id) throws Exception {
-        return false;
+        try {
+            if (personaRepository.existsById(id)) {
+                personaRepository.deleteById(id);
+                return true;
+            } else {
+                throw new Exception();
+            }
+        } catch(Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 }
