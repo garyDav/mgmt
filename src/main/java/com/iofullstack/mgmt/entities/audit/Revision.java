@@ -21,8 +21,8 @@ public class Revision implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "revision_seq")
     @SequenceGenerator(
         name = "revision_seq",
-        /*sequenceName = "rbac.seq_revision_id"*/
         sequenceName = "seq_revision_id"
+        /*sequenceName = "rbac.seq_revision_id"*/
     )
     @RevisionNumber
     private int id;
