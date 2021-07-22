@@ -15,13 +15,14 @@ import java.util.Date;
 @RevisionEntity(CustomRevisionListener.class)
 @Data
 public class Revision implements Serializable {
-    private static final long SerialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "revision_seq")
     @SequenceGenerator(
-            name = "revision_seq",
-            sequenceName = "rbac.seq_revision_id"
+        name = "revision_seq",
+        /*sequenceName = "rbac.seq_revision_id"*/
+        sequenceName = "seq_revision_id"
     )
     @RevisionNumber
     private int id;
