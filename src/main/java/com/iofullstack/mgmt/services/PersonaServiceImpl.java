@@ -4,6 +4,8 @@ import com.iofullstack.mgmt.entities.Persona;
 import com.iofullstack.mgmt.repositories.BaseRepository;
 import com.iofullstack.mgmt.repositories.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,6 +26,16 @@ public class PersonaServiceImpl extends BaseServiceImpl<Persona, Long> implement
         try {
             // List<Persona> personas = personaRepository.findByNombreContainingOrApellidoContaining(filtro, filtro);
             List<Persona> personas = personaRepository.searchNativo(filtro);
+            return personas;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public Page<Persona> search(String filtro, Pageable pageable) throws Exception {
+        try {
+            Page<Persona> personas = personaRepository.searchNativo(filtro, pageable);
             return personas;
         } catch (Exception e) {
             throw new Exception(e.getMessage());
